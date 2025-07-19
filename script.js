@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
     popup.style.display = 'flex';
     mainContent.classList.add('blur');
     headerContent.classList.add('blur');
+    const webUrl = `https://www.youtube.com/watch?v=${target}`;
 
     let secondsLeft = 5;
     const interval = setInterval(() => {
@@ -24,11 +25,26 @@ document.addEventListener('DOMContentLoaded', function() {
       if (secondsLeft <= 0) {
         clearInterval(interval);
 
-        if (/android/i.test(userAgent)) 
-          window.location.href = `intent://www.youtube.com/watch?v=${target}#Intent;package=com.google.android.youtube;scheme=vnd.youtube;end;`;
-        else if(/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) 
-          window.location.href = `youtube://www.youtube.com/watch?v=${target}`;
-        else window.location.href = `https://www.youtube.com/watch?v=${target}`;
+        if (/android/i.test(userAgent)) {
+          let intentUrl = `intent://${webUrl}#Intent;package=com.google.android.youtube;scheme=https;S.browser_fallback_url=${encodeURIComponent(webUrl)};end;`;
+          window.location.href = intentUrl;
+        }
+        else if(/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+          let appUrl = `youtube://watch?v=${target}`;
+          let appStoreUrl = `https://apps.apple.com/us/app/youtube-watch-listen-stream/id544007664`;
+
+          // Attempt to open the app
+          let appOpener = window.open(appUrl, '_blank');
+          
+          // If it fails, the window object won't be created.
+          // A timeout handles the case where the user doesn't have the app.
+          setTimeout(function() {
+              if (!appOpener) { // A more modern check
+                  window.location.href = appStoreUrl;
+              }
+          }, 200);
+        }
+        else window.location.href = webUrl;
       }
     }, 1000);
   }
