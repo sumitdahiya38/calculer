@@ -6,12 +6,9 @@ document.addEventListener('DOMContentLoaded', function() {
   const mainContent = document.getElementById('main');
   const headerContent = document.getElementById('header');
   const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-  
-  console.log("isMobile :", isMobile);
 
   const params = new URLSearchParams(window.location.search);
   const target = params.get("l");
-  console.log("target :", target);
 
   // Change this to match the referrer you want to check
   if (target) {
