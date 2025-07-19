@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const countdownEl = document.getElementById('countdown');
   const mainContent = document.getElementById('main');
   const headerContent = document.getElementById('header');
-  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  const userAgent = navigator.userAgent || window.opera;
 
   const params = new URLSearchParams(window.location.search);
   const target = params.get("l");
@@ -23,7 +23,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
       if (secondsLeft <= 0) {
         clearInterval(interval);
-        if (isMobile) window.location.href = `youtube://www.youtube.com/watch?v=${target}`;
+
+        if (/android/i.test(userAgent)) 
+          window.location.href = `intent://www.youtube.com/watch?v=${target}#Intent;package=com.google.android.youtube;scheme=vnd.youtube;end;`;
+        else if(/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) 
+          window.location.href = `youtube://www.youtube.com/watch?v=${target}`;
         else window.location.href = `https://www.youtube.com/watch?v=${target}`;
       }
     }, 1000);
