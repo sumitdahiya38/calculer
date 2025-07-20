@@ -37,9 +37,9 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // Close popup
-  closeBtn.addEventListener('click', () => {
-    popup.style.display = 'none';
-  });
+  // closeBtn.addEventListener('click', () => {
+  //   popup.style.display = 'none';
+  // });
 });
 
 function selectUnit(unit) {
