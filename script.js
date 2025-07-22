@@ -26,8 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
         clearInterval(interval);
 
         if (/android/i.test(userAgent)) {
-          const intentUrl = `intent://${webUrl}#Intent;package=com.google.android.youtube;scheme=https;S.browser_fallback_url=${encodeURIComponent(webUrl)};end;`;
-          window.location.href = intentUrl;
+          window.location.href = webUrl;
         }
         else if(/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream)
           window.location.href = `youtube://www.youtube.com/watch?v=${target}`;
