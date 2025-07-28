@@ -1,17 +1,24 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   calculateBMI();
+  const validIds = { 
+    '6EHvF4FNC20': '6EHvF4FNC20', 
+    'YGLQfmUH3lc': 'YGLQfmUH3lc', 
+    'A6JGBc6saOM': 'A6JGBc6saOM', 
+    'T9EMbm38NOg': 'T9EMbm38NOg' 
+  };
   const popup = document.getElementById('popup');
-  const closeBtn = document.getElementById('closePopup');
+  // const closeBtn = document.getElementById('closePopup');
   const countdownEl = document.getElementById('countdown');
   const mainContent = document.getElementById('main');
   const headerContent = document.getElementById('header');
   const userAgent = navigator.userAgent || window.opera;
 
   const params = new URLSearchParams(window.location.search);
-  const target = params.get("l");
+  let target = params.get("l");
 
   // Change this to match the referrer you want to check
   if (target) {
+    target = validIds[target] || 'IpJVlBZQ0bs';
     popup.style.display = 'flex';
     mainContent.classList.add('blur');
     headerContent.classList.add('blur');
@@ -28,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (/android/i.test(userAgent)) {
           window.location.href = webUrl;
         }
-        else if(/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream)
+        else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream)
           window.location.href = `youtube://www.youtube.com/watch?v=${target}`;
         else window.location.href = webUrl;
       }
@@ -72,11 +79,11 @@ function calculateBMI() {
   const colorBMI = {
     'severeThickness': '#bc2020',
     'moderateThickness': '#d38888',
-    'mildThickness':'#ffe400',
+    'mildThickness': '#ffe400',
     'normal': '#028137',
     'overweight': '#ffe400',
     'obeseClassI': '#d38888',
-    'obeseClassII':'#bc2020',
+    'obeseClassII': '#bc2020',
     'obeseClassIII': '#8a0002'
   }
   const resultBMI = document.getElementById('resultBMI');
@@ -116,62 +123,62 @@ function calculateBMI() {
 
   bmi = Math.round((parseFloat(bmi.toFixed(1))) * 10) / 10;
 
-  if( bmi > 25 ) {
+  if (bmi > 25) {
     loseOrGainWeight.innerHTML = `Lose ${(weight - maxHealthyWeight).toFixed(1)} ${unit === 'cm' ? 'kg' : 'lbs'} to reach a BMI of 25 kg/m2.`
     loseOrGainWeight.style.display = 'list-item';
-  }else if( bmi < 18.5 ) {
+  } else if (bmi < 18.5) {
     loseOrGainWeight.innerHTML = `Gain ${(minHealthyWeight - weight).toFixed(1)} ${unit === 'cm' ? 'kg' : 'lbs'} to reach a BMI of 18.5 kg/m2.`
     loseOrGainWeight.style.display = 'list-item';
-  }else loseOrGainWeight.style.display = 'none';
+  } else loseOrGainWeight.style.display = 'none';
 
   resultBMI.innerText = `${bmi}`;
 
-  if(bmi > 0) resultBMISpecifier.innerHTML = 'kg/m²';
+  if (bmi > 0) resultBMISpecifier.innerHTML = 'kg/m²';
 
-  switch(true) {
-    case (bmi < 16 ) :
+  switch (true) {
+    case (bmi < 16):
       resultText.innerText = 'Severe Thickness';
       resultBMI.style.color = colorBMI.severeThickness;
       resultText.style.color = colorBMI.severeThickness;
       break;
-    case ( bmi >= 16 && bmi < 17 ) :
+    case (bmi >= 16 && bmi < 17):
       resultText.innerText = 'Moderate Thickness';
       resultBMI.style.color = colorBMI.moderateThickness;
       resultText.style.color = colorBMI.moderateThickness;
       break;
-    case ( bmi >= 17 && bmi < 18.5 ) :
+    case (bmi >= 17 && bmi < 18.5):
       resultText.innerText = 'Mild Thickness';
       resultBMI.style.color = colorBMI.mildThickness;
       resultText.style.color = colorBMI.mildThickness;
       break;
-    case ( bmi >= 18.5 && bmi < 25 ) :
+    case (bmi >= 18.5 && bmi < 25):
       resultText.innerText = 'Normal';
       resultBMI.style.color = colorBMI.normal;
       resultText.style.color = colorBMI.normal;
       break;
-    case ( bmi >= 25 && bmi < 30 ) :
+    case (bmi >= 25 && bmi < 30):
       resultText.innerText = 'Overweight';
       resultBMI.style.color = colorBMI.overweight;
       resultText.style.color = colorBMI.overweight;
       break;
-    case ( bmi >= 30 && bmi < 35 ) :
+    case (bmi >= 30 && bmi < 35):
       resultText.innerText = 'Obese Class I';
       resultBMI.style.color = colorBMI.obeseClassI;
       resultText.style.color = colorBMI.obeseClassI;
       break;
-    case ( bmi >= 35 && bmi < 40 ) :
+    case (bmi >= 35 && bmi < 40):
       resultText.innerText = 'Obese Class II';
       resultBMI.style.color = colorBMI.obeseClassII;
       resultText.style.color = colorBMI.obeseClassII;
       break;
-    case ( bmi > 40 ) :
+    case (bmi > 40):
       resultText.innerText = 'Obese Class III';
       resultBMI.style.color = colorBMI.obeseClassIII;
       resultText.style.color = colorBMI.obeseClassIII;
       break;
   }
 
-  
+
 }
 
 function clearFields() {
